@@ -20,11 +20,12 @@ npm install @echecs/direct-encounter
 
 ```typescript
 import { directEncounter } from '@echecs/direct-encounter';
+import type { Game, GameKind } from '@echecs/direct-encounter';
 
 // Players A, B, C are tied on points
 const players = [{ id: 'A' }, { id: 'B' }, { id: 'C' }];
 // games[n] = round n+1; Game has no `round` field
-const games = [
+const games: Game[][] = [
   [{ black: 'B', result: 1, white: 'A' }], // round 1
   [{ black: 'C', result: 0.5, white: 'A' }], // round 2
   [{ black: 'C', result: 0, white: 'B' }], // round 3
@@ -43,7 +44,9 @@ const score = directEncounter('A', games, players);
 (the tied group). The caller is responsible for passing the correct subset of
 `players` — typically those who share the same tournament score as `playerId`.
 Byes are excluded. Round is determined by array position: `games[0]` = round 1,
-`games[1]` = round 2, etc. The `Game` type has no `round` field.
+`games[1]` = round 2, etc. The `Game` type has no `round` field. The optional
+`kind?: GameKind` field identifies unplayed rounds; byes (`black: ''`) are
+excluded from Direct Encounter regardless.
 
 ```typescript
 directEncounter(playerId: string, games: Game[][], players?: Player[]): number

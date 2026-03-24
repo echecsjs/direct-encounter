@@ -26,6 +26,11 @@ The function conforms to the signature:
 `games[1]` contains round-2 games, and so on. The `Game` type no longer has a
 `round` field — round is determined by array position.
 
+The `Game` type carries an optional `kind?: GameKind` field. When present it
+identifies the nature of an unplayed round (e.g. `'half-bye'`, `'full-bye'`,
+`'forfeit-win'`, `'forfeit-loss'`, `'zero-bye'`, `'pairing-bye'`). When absent,
+the game is treated as a normal over-the-board result.
+
 FIDE reference: https://handbook.fide.com/chapter/TieBreakRegulations032026
 (section 6 — Direct Encounter)
 
