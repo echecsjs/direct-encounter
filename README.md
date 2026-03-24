@@ -23,10 +23,11 @@ import { directEncounter } from '@echecs/direct-encounter';
 
 // Players A, B, C are tied on points
 const players = [{ id: 'A' }, { id: 'B' }, { id: 'C' }];
+// games[n] = round n+1; Game has no `round` field
 const games = [
-  { blackId: 'B', result: 1, round: 1, whiteId: 'A' },
-  { blackId: 'C', result: 0.5, round: 2, whiteId: 'A' },
-  { blackId: 'C', result: 0, round: 3, whiteId: 'B' },
+  [{ blackId: 'B', result: 1, whiteId: 'A' }], // round 1
+  [{ blackId: 'C', result: 0.5, whiteId: 'A' }], // round 2
+  [{ blackId: 'C', result: 0, whiteId: 'B' }], // round 3
 ];
 
 const score = directEncounter('A', games, players);
@@ -35,16 +36,17 @@ const score = directEncounter('A', games, players);
 
 ## API
 
-### `directEncounter(playerId, games, players)`
+### `directEncounter(playerId, games, players?)`
 
 **FIDE section 6** — Direct Encounter score. Returns the total points scored by
 `playerId` in games played only against other players in the `players` array
 (the tied group). The caller is responsible for passing the correct subset of
 `players` — typically those who share the same tournament score as `playerId`.
-Byes are excluded.
+Byes are excluded. Round is determined by array position: `games[0]` = round 1,
+`games[1]` = round 2, etc. The `Game` type has no `round` field.
 
 ```typescript
-directEncounter(playerId: string, games: Game[], players: Player[]): number
+directEncounter(playerId: string, games: Game[][], players?: Player[]): number
 ```
 
 When all tied players have identical Direct Encounter scores (the common case in
