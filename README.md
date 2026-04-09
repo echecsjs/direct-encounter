@@ -19,7 +19,7 @@ npm install @echecs/direct-encounter
 
 ```typescript
 import { directEncounter } from '@echecs/direct-encounter';
-import type { Game, GameKind } from '@echecs/direct-encounter';
+import type { Game, GameKind, Player } from '@echecs/direct-encounter';
 
 // Players A, B, C are tied on points
 const players = [{ id: 'A' }, { id: 'B' }, { id: 'C' }];
@@ -36,7 +36,7 @@ const score = directEncounter('A', games, players);
 
 ## API
 
-### `directEncounter(playerId, games, players?)`
+### `directEncounter(playerId, games, players)`
 
 **FIDE section 6** — Direct Encounter score. Returns the total points scored by
 `playerId` in games played only against other players in the `players` array
@@ -44,16 +44,35 @@ const score = directEncounter('A', games, players);
 `players` — typically those who share the same tournament score as `playerId`.
 Byes are excluded. Round is determined by array position: `games[0]` = round 1,
 `games[1]` = round 2, etc. The `Game` type has no `round` field. The optional
-`kind?: GameKind` field identifies unplayed rounds; byes (`black: ''`) are
-excluded from Direct Encounter regardless.
+`kind?: GameKind` field identifies unplayed rounds; byes are excluded from
+Direct Encounter regardless.
 
 ```typescript
-directEncounter(playerId: string, games: Game[][], players?: Player[]): number
+directEncounter(playerId: string, games: Game[][], players: Player[]): number
+```
+
+Also exported as `tiebreak` — an alias for `directEncounter`:
+
+```typescript
+import { tiebreak } from '@echecs/direct-encounter';
 ```
 
 When all tied players have identical Direct Encounter scores (the common case in
 Swiss), this tiebreak is inconclusive and the next tiebreak in the ordering
 should be applied.
+
+### Types
+
+```typescript
+import type { Game, GameKind, Player, Result } from '@echecs/direct-encounter';
+```
+
+| Type       | Shape / Values                                                                               |
+| ---------- | -------------------------------------------------------------------------------------------- |
+| `Player`   | `{ id: string }`                                                                             |
+| `Result`   | `0 \| 0.5 \| 1`                                                                              |
+| `Game`     | `{ black: string; white: string; result: Result; kind?: GameKind }`                          |
+| `GameKind` | `'forfeit-loss' \| 'forfeit-win' \| 'full-bye' \| 'half-bye' \| 'pairing-bye' \| 'zero-bye'` |
 
 ## Contributing
 
