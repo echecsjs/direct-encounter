@@ -1,7 +1,7 @@
 {
   "author": "Adrian de la Rosa <adrian@delarosab.me>",
   "bugs": {
-    "url": "https://github.com/mormubis/direct-encounter/issues"
+    "url": "https://github.com/echecsjs/direct-encounter/issues"
   },
   "description": "Direct encounter tiebreak for chess tournaments following FIDE rules. Zero dependencies.",
   "devDependencies": {
@@ -37,7 +37,7 @@
     "README.md",
     "CHANGELOG.md"
   ],
-  "homepage": "https://github.com/mormubis/direct-encounter#readme",
+  "homepage": "https://github.com/echecsjs/direct-encounter#readme",
   "keywords": [
     "chess",
     "direct-encounter",
@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mormubis/direct-encounter.git"
+    "url": "https://github.com/echecsjs/direct-encounter.git"
   },
   "scripts": {
     "build": "tsdown",

@@ -1,7 +1,7 @@
 # Direct Encounter
 
 [![npm](https://img.shields.io/npm/v/@echecs/direct-encounter)](https://www.npmjs.com/package/@echecs/direct-encounter)
-[![Coverage](https://codecov.io/gh/mormubis/direct-encounter/branch/main/graph/badge.svg)](https://codecov.io/gh/mormubis/direct-encounter)
+[![Coverage](https://codecov.io/gh/echecsjs/direct-encounter/branch/main/graph/badge.svg)](https://codecov.io/gh/echecsjs/direct-encounter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Direct Encounter** is a TypeScript library implementing the Direct Encounter
@@ -77,4 +77,4 @@ import type { Game, GameKind, Player, Result } from '@echecs/direct-encounter';
 ## Contributing
 
 Contributions are welcome. Please open an issue at
-[github.com/mormubis/direct-encounter/issues](https://github.com/mormubis/direct-encounter/issues).
+[github.com/echecsjs/direct-encounter/issues](https://github.com/echecsjs/direct-encounter/issues).
