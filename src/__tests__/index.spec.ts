@@ -40,4 +40,15 @@ describe('directEncounter', () => {
   it('handles player with no games', () => {
     expect(directEncounter('A', [], PLAYERS)).toBe(0);
   });
+
+  it('averages multiple games against the same opponent (FIDE 6.1.2)', () => {
+    // A and B play twice: A wins game 1, B wins game 2
+    // A's score vs B: (1 + 0) / 2 = 0.5
+    const games: Game[][] = [
+      [{ black: 'B', result: 1, white: 'A' }],
+      [{ black: 'B', result: 0, white: 'A' }],
+    ];
+    const players: Player[] = [{ id: 'A' }, { id: 'B' }];
+    expect(directEncounter('A', games, players)).toBe(0.5);
+  });
 });
