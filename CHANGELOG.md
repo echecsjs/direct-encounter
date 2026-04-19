@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.3] - 2026-04-19
+
+### Fixed
+
+- When two tied players met more than once, use the average score across their
+  games instead of the raw sum (FIDE 6.1.2).
+
 ## [3.0.2] - 2026-04-17
 
 ### Fixed
