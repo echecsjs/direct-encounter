@@ -1,6 +1,6 @@
 import { gamesForPlayer, score } from './utilities.js';
 
-import type { Game, Player } from './types.js';
+import type { Game, Player } from '@echecs/tournament';
 
 function directEncounter(
   player: string,
@@ -40,4 +40,4 @@ function directEncounter(
 
 export { directEncounter, directEncounter as tiebreak };
 
-export type { Game, GameKind, Player, Result } from './types.js';
+export type { Game, GameKind, Player, Result } from '@echecs/tournament';
