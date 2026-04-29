@@ -1,4 +1,4 @@
-import type { Game } from './types.js';
+import type { Game } from '@echecs/tournament';
 
 function gamesForPlayer(player: string, games: Game[][]): Game[] {
   return games.flat().filter((g) => g.white === player || g.black === player);

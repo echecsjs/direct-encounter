@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { directEncounter } from '../index.js';
 
-import type { Game, Player } from '../types.js';
+import type { Game, Player } from '@echecs/tournament';
 
 // 4 players, 3 rounds:
 // Round 1: A(W) 1-0 B, C(W) 0-1 D
