@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@echecs/direct-encounter)](https://www.npmjs.com/package/@echecs/direct-encounter)
 [![Coverage](https://codecov.io/gh/echecsjs/direct-encounter/branch/main/graph/badge.svg)](https://codecov.io/gh/echecsjs/direct-encounter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Spec](https://img.shields.io/badge/Spec-FIDE-green.svg)](SPEC.md)
 
 **Direct Encounter** is a TypeScript library implementing the Direct Encounter
 tiebreak for chess tournaments, following the
