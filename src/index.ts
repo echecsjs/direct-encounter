@@ -1,27 +1,27 @@
-import { gamesForPlayer, score } from './utilities.js';
+import { gamesForPlayer, scoreFor } from './utilities.js';
 
-import type { Game, Player } from '@echecs/tournament';
+import type { CompletedRound, Player } from '@echecs/tournament';
 
 function directEncounter(
   player: string,
-  games: Game[][],
+  rounds: CompletedRound[],
   players: Player[],
 ): number {
-  const playerScore = score(player, games);
+  const playerData = players.find((p) => p.id === player);
+  if (playerData === undefined) {
+    return 0;
+  }
   const tiedPlayerIds = new Set(
     players
-      .filter((p) => p.id !== player && score(p.id, games) === playerScore)
+      .filter((p) => p.id !== player && p.points === playerData.points)
       .map((p) => p.id),
   );
 
   const byOpponent = new Map<string, number[]>();
-  for (const g of gamesForPlayer(player, games)) {
-    if (g.black === g.white) {
-      continue;
-    }
+  for (const g of gamesForPlayer(player, rounds)) {
     const opponent = g.white === player ? g.black : g.white;
     if (tiedPlayerIds.has(opponent)) {
-      const points = g.white === player ? g.result : 1 - g.result;
+      const points = scoreFor(player, g);
       const scores = byOpponent.get(opponent);
       if (scores) {
         scores.push(points);
@@ -40,4 +40,10 @@ function directEncounter(
 
 export { directEncounter, directEncounter as tiebreak };
 
-export type { Game, GameKind, Player, Result } from '@echecs/tournament';
+export type {
+  Bye,
+  CompletedRound,
+  Game,
+  Pairing,
+  Player,
+} from '@echecs/tournament';

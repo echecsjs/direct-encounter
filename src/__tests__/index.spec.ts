@@ -2,39 +2,46 @@ import { describe, expect, it } from 'vitest';
 
 import { directEncounter } from '../index.js';
 
-import type { Game, Player } from '@echecs/tournament';
+import type { CompletedRound, Player } from '@echecs/tournament';
 
-// 4 players, 3 rounds:
-// Round 1: A(W) 1-0 B, C(W) 0-1 D
-// Round 2: A(W) 0.5-0.5 D, C(W) 0-1 B
-// Round 3: A(W) 1-0 C, D(W) 1-0 B
-// Scores: A=2.5, D=2.5, B=1, C=0
-const PLAYERS: Player[] = [{ id: 'A' }, { id: 'B' }, { id: 'C' }, { id: 'D' }];
+const PLAYERS: Player[] = [
+  { id: 'A', points: 2.5, rank: 1 },
+  { id: 'B', points: 1, rank: 3 },
+  { id: 'C', points: 0, rank: 4 },
+  { id: 'D', points: 2.5, rank: 2 },
+];
 
-const GAMES: Game[][] = [
-  [
-    { black: 'B', result: 1, white: 'A' },
-    { black: 'D', result: 0, white: 'C' },
-  ],
-  [
-    { black: 'D', result: 0.5, white: 'A' },
-    { black: 'B', result: 0, white: 'C' },
-  ],
-  [
-    { black: 'C', result: 1, white: 'A' },
-    { black: 'B', result: 1, white: 'D' },
-  ],
+const ROUNDS: CompletedRound[] = [
+  {
+    byes: [],
+    games: [
+      { black: 'B', result: 'white', white: 'A' },
+      { black: 'D', result: 'black', white: 'C' },
+    ],
+  },
+  {
+    byes: [],
+    games: [
+      { black: 'D', result: 'draw', white: 'A' },
+      { black: 'B', result: 'black', white: 'C' },
+    ],
+  },
+  {
+    byes: [],
+    games: [
+      { black: 'C', result: 'white', white: 'A' },
+      { black: 'B', result: 'white', white: 'D' },
+    ],
+  },
 ];
 
 describe('directEncounter', () => {
   it('returns points scored against tied players only', () => {
-    // A(2.5) is tied with D(2.5); A drew D → 0.5
-    expect(directEncounter('A', GAMES, PLAYERS)).toBe(0.5);
+    expect(directEncounter('A', ROUNDS, PLAYERS)).toBe(0.5);
   });
 
   it('returns 0 when no one is tied with the player', () => {
-    // B(1) is unique → 0
-    expect(directEncounter('B', GAMES, PLAYERS)).toBe(0);
+    expect(directEncounter('B', ROUNDS, PLAYERS)).toBe(0);
   });
 
   it('handles player with no games', () => {
@@ -42,13 +49,14 @@ describe('directEncounter', () => {
   });
 
   it('averages multiple games against the same opponent (FIDE 6.1.2)', () => {
-    // A and B play twice: A wins game 1, B wins game 2
-    // A's score vs B: (1 + 0) / 2 = 0.5
-    const games: Game[][] = [
-      [{ black: 'B', result: 1, white: 'A' }],
-      [{ black: 'B', result: 0, white: 'A' }],
+    const rounds: CompletedRound[] = [
+      { byes: [], games: [{ black: 'B', result: 'white', white: 'A' }] },
+      { byes: [], games: [{ black: 'B', result: 'black', white: 'A' }] },
     ];
-    const players: Player[] = [{ id: 'A' }, { id: 'B' }];
-    expect(directEncounter('A', games, players)).toBe(0.5);
+    const players: Player[] = [
+      { id: 'A', points: 1, rank: 1 },
+      { id: 'B', points: 1, rank: 2 },
+    ];
+    expect(directEncounter('A', rounds, players)).toBe(0.5);
   });
 });
