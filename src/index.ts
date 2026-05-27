@@ -1,12 +1,8 @@
 import { gamesForPlayer, scoreFor } from './utilities.js';
 
-import type { CompletedRound, Player } from '@echecs/tournament';
+import type { Tiebreak } from '@echecs/tournament';
 
-function directEncounter(
-  player: string,
-  rounds: CompletedRound[],
-  players: Player[],
-): number {
+const directEncounter: Tiebreak = (player, rounds, players) => {
   const playerData = players.find((p) => p.id === player);
   if (playerData === undefined) {
     return 0;
@@ -36,7 +32,7 @@ function directEncounter(
     sum += scores.reduce((a, b) => a + b, 0) / scores.length;
   }
   return sum;
-}
+};
 
 export { directEncounter, directEncounter as tiebreak };
 
