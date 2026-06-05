@@ -5,10 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Spec](https://img.shields.io/badge/Spec-FIDE-green.svg)](SPEC.md)
 
-**Direct Encounter** is a TypeScript library implementing the Direct Encounter
-tiebreak for chess tournaments, following the
+**Direct Encounter** computes the Direct Encounter tiebreak — a FIDE method that
+compares players' scores from games played only against each other — following
+the
 [FIDE Tiebreak Regulations](https://handbook.fide.com/chapter/TieBreakRegulations032026)
-(section 6). Zero runtime dependencies.
+(section 6). TypeScript, zero runtime dependencies.
 
 ## Installation
 
@@ -39,18 +40,18 @@ const score = directEncounter('A', games, players);
 
 ### `directEncounter(playerId, games, players)`
 
-**FIDE section 6** — Direct Encounter score. Returns the total points scored by
-`playerId` in games played only against other players in the `players` array
-(the tied group). The caller is responsible for passing the correct subset of
-`players` — typically those who share the same tournament score as `playerId`.
-Byes are excluded. Round is determined by array position: `games[0]` = round 1,
-`games[1]` = round 2, etc. The `Game` type has no `round` field. The optional
-`kind?: GameKind` field identifies unplayed rounds; byes are excluded from
-Direct Encounter regardless.
-
 ```typescript
 directEncounter(playerId: string, games: Game[][], players: Player[]): number
 ```
+
+Returns the total points `playerId` scored against the players in the `players`
+array (the tied group). Pass the subset of players who share the same tournament
+score as `playerId`.
+
+Round order follows array position: `games[0]` = round 1, `games[1]` = round 2,
+etc. The optional `kind?: GameKind` field identifies unplayed rounds
+(`'forfeit-loss' | 'forfeit-win' | 'full-bye' | 'half-bye' | 'pairing-bye' | 'zero-bye'`);
+the function excludes all byes from the score.
 
 Also exported as `tiebreak` — an alias for `directEncounter`:
 
@@ -59,8 +60,7 @@ import { tiebreak } from '@echecs/direct-encounter';
 ```
 
 When all tied players have identical Direct Encounter scores (the common case in
-Swiss), this tiebreak is inconclusive and the next tiebreak in the ordering
-should be applied.
+Swiss), this tiebreak is inconclusive. Apply the next tiebreak in the ordering.
 
 ### Types
 
