@@ -53,6 +53,9 @@ etc. The optional `kind?: GameKind` field identifies unplayed rounds
 (`'forfeit-loss' | 'forfeit-win' | 'full-bye' | 'half-bye' | 'pairing-bye' | 'zero-bye'`);
 the function excludes all byes from the score.
 
+Per the FIDE C.07 6.1.1 default, forfeit encounters are excluded from the Direct
+Encounter score. Use the `/forfeits` subpath export to include them.
+
 Also exported as `tiebreak` — an alias for `directEncounter`:
 
 ```typescript
@@ -74,6 +77,21 @@ import type { Game, GameKind, Player, Result } from '@echecs/direct-encounter';
 | `Result`   | `0 \| 0.5 \| 1`                                                                              |
 | `Game`     | `{ black: string; white: string; result: Result; kind?: GameKind }`                          |
 | `GameKind` | `'forfeit-loss' \| 'forfeit-win' \| 'full-bye' \| 'half-bye' \| 'pairing-bye' \| 'zero-bye'` |
+
+### `/forfeits` subpath export
+
+```typescript
+import {
+  directEncounterForfeits,
+  tiebreak,
+} from '@echecs/direct-encounter/forfeits';
+```
+
+**FIDE C.07 6.1.1 (included variant)** — Direct Encounter including forfeit
+encounters. Identical to the base `directEncounter`, except that encounters
+forfeited by a tied opponent count towards the score instead of being excluded.
+
+`tiebreak` is an alias for `directEncounterForfeits`.
 
 ## Contributing
 

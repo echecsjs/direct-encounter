@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.1.0] - 2026-08-30
+
+### Added
+
+- `@echecs/direct-encounter/forfeits` — Direct Encounter including forfeits
+  (FIDE C.07 6.1.1 included variant)
+
+### Fixed
+
+- Base Direct Encounter excludes forfeit encounters (FIDE C.07 6.1.1 default)
+
 ## [3.0.3] - 2026-04-19
 
 ### Fixed
