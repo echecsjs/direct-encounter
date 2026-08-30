@@ -2,7 +2,7 @@ import { gamesForPlayer, scoreFor } from './utilities.js';
 
 import type { Tiebreak } from '@echecs/tournament';
 
-const directEncounter: Tiebreak = (player, rounds, players) => {
+const directEncounterForfeits: Tiebreak = (player, rounds, players) => {
   const playerData = players.find((p) => p.id === player);
   if (playerData === undefined) {
     return 0;
@@ -15,9 +15,6 @@ const directEncounter: Tiebreak = (player, rounds, players) => {
 
   const byOpponent = new Map<string, number[]>();
   for (const g of gamesForPlayer(player, rounds)) {
-    if (g.forfeit !== undefined) {
-      continue;
-    }
     const opponent = g.white === player ? g.black : g.white;
     if (tiedPlayerIds.has(opponent)) {
       const points = scoreFor(player, g);
@@ -37,7 +34,7 @@ const directEncounter: Tiebreak = (player, rounds, players) => {
   return sum;
 };
 
-export { directEncounter, directEncounter as tiebreak };
+export { directEncounterForfeits, directEncounterForfeits as tiebreak };
 
 export type {
   Bye,
