@@ -16,15 +16,11 @@ const directEncounterForfeits: Tiebreak = (player, rounds, players) => {
   const byOpponent = new Map<string, number[]>();
   for (const g of gamesForPlayer(player, rounds)) {
     const opponent = g.white === player ? g.black : g.white;
-    if (tiedPlayerIds.has(opponent)) {
-      const points = scoreFor(player, g);
-      const scores = byOpponent.get(opponent);
-      if (scores) {
-        scores.push(points);
-      } else {
-        byOpponent.set(opponent, [points]);
-      }
+    if (!tiedPlayerIds.has(opponent)) {
+      continue;
     }
+    const points = scoreFor(player, g);
+    byOpponent.set(opponent, [...(byOpponent.get(opponent) ?? []), points]);
   }
 
   let sum = 0;
